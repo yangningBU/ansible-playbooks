@@ -1,3 +1,15 @@
+default: menu
+menu:
+	@echo "Some of the make commands available are:\n"
+	@echo "\t- setup-env   \t Get python/ansible environment set up"
+	@echo "\t- setup-vm    \t Make sure your Vagrant VM is up and running"
+	@echo "\t- build       \t Standup nginx server for both HTTP and HTTPS traffic"
+	@echo "\nRead the Makefile for a complete list of commands."
+
+build:
+	$(MAKE) setup-http-site
+	$(MAKE) setup-https-site
+
 setup-env:
 	pyenv install 3.7.0
 	pyenv virtualenv 3.7.0 ansible-venv
