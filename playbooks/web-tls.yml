@@ -1,0 +1,60 @@
+---
+- name: Configure nginx with TLS using self-signed cert
+  hosts: webservers
+  become: True
+  vars:
+    key_file: nginx.key
+    cert_file: nginx.crt
+    local_files_dir: ../files
+    local_templates_dir: ../templates
+    nginx_home: /etc/nginx
+    ssl_dir: "{{nginx_home}}/ssl"
+    key_file_path: "{{ssl_dir}}/{{key_file}}"
+    cert_file_path: "{{ssl_dir}}/{{cert_file}}"
+    conf_file_path: "{{nginx_home}}/sites-available/default"
+    server_name: localhost
+  tasks:
+    - name: Install nginx
+      apt: name=nginx update_cache=yes cache_valid_time=3600
+    
+    - name: Create dirs for ssl certs
+      file: >
+        path={{ssl_dir}}
+        state=directory
+    
+    - name: Copy over TLS private key
+      copy: >
+        src={{local_files_dir}}/{{key_file}}
+        dest={{key_file_path}}
+        owner=root
+        mode=0600
+      notify: restart nginx
+    
+    - name: Copy over TLS certificate
+      copy: >
+        src={{local_files_dir}}/{{cert_file}}
+        dest={{cert_file_path}}
+      notify: restart nginx
+    
+    - name: Copy over nginx config file
+      template: >
+        src={{local_files_dir}}/nginx.tls.conf.j2
+        dest={{conf_file_path}}
+      notify: restart nginx
+    
+    - name: Enable configuration
+      file: >
+          dest={{nginx_home}}/sites-enabled/default
+          src={{conf_file_path}}
+          state=link
+    
+    - name: Copy over index.html
+      template: >
+        src={{local_templates_dir}}/index.html.j2
+        dest=/usr/share/nginx/html/index.html
+        mode=0644
+  
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+      

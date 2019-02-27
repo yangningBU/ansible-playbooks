@@ -4,29 +4,30 @@ I used Vagrant and Virtualbox to manage linux VMs locally, download [vagrant her
 ### Setup
 I used pyenv:
 ```
-pyenv install 3.7.0
-pyenv virtualenv 3.7.0 ansible-venv
-pyenv local virtualenv
-pyenv activate
-pip install ansible
+make setup-env
 ```
 
 Create Ubuntu VM:
 ```
-vagrant init ubuntu/trusty64
-vagrant up
+make setup-vm
 ```
 If you make changes to Vagrantfile, run
 ```
-vagrant reload
+make update-vm
 ```
 before running any ansible playbooks.
 
 ### Setup Nginx on Your VM:
 ```
-ansible-playbook web-notls.yml
+make setup-http-site
 ```
 Go checkout [localhost:8080](http://localhost:8080)
+
+Or for funsies, run the one with TLS:
+```
+make setup-https-site
+```
+and go checkout [localhost:8443](https://localhost:8443)
 
 
 Author: Yonatan Laurence

@@ -1,26 +1,30 @@
+---
 - name: Configure webserver with nginx but no TLS
   hosts: webservers
   become: True
+  vars:
+    - local_files_dir: ../files
+    - local_templates_dir: ../templates
   tasks:
-    - name: install nginx
-      apt: name=nginx update_cache=yes
+    - name: Install nginx
+      apt: name=nginx update_cache=yes cache_valid_time=3600
 
-    - name: copy over nginx config file
+    - name: Copy over nginx config file
       copy: >
-        src=files/nginx.conf
+        src={{local_files_dir}}/nginx.conf
         dest=/etc/nginx/sites-available/default
 
-    - name: enable configuration
+    - name: Enable configuration
       file: >
         dest=/etc/nginx/sites-enabled/default
         src=/etc/nginx/sites-available/default
         state=link
 
-    - name: copy over index.html
+    - name: Copy over index.html
       template: >
-        src=templates/index.html.j2
+        src={{local_templates_dir}}/index.html.j2
         dest=/usr/share/nginx/html/index.html
         mode=0644
 
-    - name: restart nginx
+    - name: Restart nginx
       service: name=nginx state=restarted

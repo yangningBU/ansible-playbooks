@@ -1,1 +1,11 @@
+# Setup files
 .vagrant
+
+# Generated files
+/files/nginx.key
+/files/nginx.crt
+
+# Editor temp files
+*.retry
+*.swp
+*.swo

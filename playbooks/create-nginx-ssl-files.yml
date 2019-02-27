@@ -1,0 +1,14 @@
+---
+- name: Create SSL key and cert for use by nginx playbooks
+  hosts: local
+  vars:
+    - key_file: ../files/nginx.key
+    - cert_file: ../files/nginx.crt
+  tasks:
+    - name: Create key and cert in ../files dir
+      command: >
+        openssl req -x509 -nodes -days 3650
+        -newkey rsa:2048
+        -subj /CN=localhost
+        -keyout {{ key_file }}
+        -out {{ cert_file }}
