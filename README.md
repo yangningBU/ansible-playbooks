@@ -17,17 +17,12 @@ make update-vm
 ```
 before running any ansible playbooks.
 
-### Setup Nginx on Your VM:
+### Run playbooks:
+Right now the only thing we got going is running a basic html page behind Nginx served over both HTTP and HTTPS
 ```
-make setup-http-site
+make build
 ```
-Go checkout [localhost:8080](http://localhost:8080)
-
-Or for funsies, run the one with TLS:
-```
-make setup-https-site
-```
-and go checkout [localhost:8443](https://localhost:8443)
+Go checkout [localhost:8080](http://localhost:8080) and [localhost:8443](https://localhost:8443)
 
 
 Author: Yonatan Laurence

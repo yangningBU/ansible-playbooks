@@ -20,6 +20,7 @@ setup-vm:
 	vagrant up
 
 update-vm:
+	@echo "Reloading VM config. This will shutdown the VM real quick and restart it."
 	vagrant reload
 
 setup-http-site:
