@@ -1,0 +1,33 @@
+---
+- name: "Setup and run docker"
+  hosts: webservers
+  become: True
+  vars:
+    - local_script_dir: ../scripts
+    - remote_script_dir: /home/vagrant/scripts
+    - docker_script_name: install-docker.sh
+  tasks:
+  - name: Ensure scripts directory exists
+    file:
+      path: "{{remote_script_dir}}"
+      state: directory
+
+  - name: Copy over install script to remote host
+    copy: >
+      src="{{local_script_dir}}/{{docker_script_name}}"
+      dest="{{remote_script_dir}}/{{docker_script_name}}"
+
+  - name: "Make it executable"
+    file:
+      path: "{{remote_script_dir}}/{{docker_script_name}}"
+      mode: 0755
+
+  - name: Run install
+    command: "chdir={{remote_script_dir}} ./{{docker_script_name}}"
+  
+  - shell: docker --version
+    vars:
+        ansible_become: false
+    register: dversion
+  - debug:
+      msg: "{{dversion.stdout}}"
