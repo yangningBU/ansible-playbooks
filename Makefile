@@ -16,7 +16,7 @@ setup-env:
 	pyenv local virtualenv; pyenv activate; pip install ansible
 
 setup-vm:
-	vagrant init ubuntu/trusty64
+	vagrant init ubuntu/xenial64
 	vagrant up
 
 update-vm:

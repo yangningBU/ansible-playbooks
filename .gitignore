@@ -9,3 +9,6 @@
 *.retry
 *.swp
 *.swo
+
+# Log files
+*.log
