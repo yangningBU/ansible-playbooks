@@ -6,9 +6,12 @@ menu:
 	@echo "\t- build       \t Standup nginx server for both HTTP and HTTPS traffic"
 	@echo "\nRead the Makefile for a complete list of commands."
 
-build:
+build: vm-up
 	$(MAKE) setup-http-site
 	$(MAKE) setup-https-site
+
+activate:
+	pyenv activate
 
 setup-env:
 	pyenv install 3.7.0
@@ -17,6 +20,9 @@ setup-env:
 
 setup-vm:
 	vagrant init ubuntu/xenial64
+	$(MAKE) vm-up
+
+vm-up:
 	vagrant up
 
 update-vm:
