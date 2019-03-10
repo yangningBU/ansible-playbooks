@@ -14,9 +14,12 @@ activate:
 	pyenv activate
 
 setup-env:
-	pyenv install 3.7.0
-	pyenv virtualenv 3.7.0 ansible-venv
-	pyenv local virtualenv; pyenv activate; pip install ansible
+	command -v pyenv >/dev/null 2>&1 || { echo >&2 "Automatic setup requires pyenv to be installed. Aborting."; exit 1; }
+	command -v pyenv-virtualenv >/dev/null 2>&1 || { echo >&2 "Automatic setup requires pyenv-virtualenv to be installed. Aborting."; exit 1; }
+	pyenv install -s 3.7.2
+	pyenv virtualenv 3.7.2 ansible-venv
+	pyenv activate ansible-venv
+	pip install ansible
 
 setup-vm:
 	vagrant init ubuntu/xenial64
