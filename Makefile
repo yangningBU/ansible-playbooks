@@ -12,17 +12,17 @@ deploy: vm-up
 	$(MAKE) setup-https-site
 
 activate:
-	pipenv shell
+	pipenv shell || true
 
 setup:
 	$(MAKE) install
 	$(MAKE) vm-up
 	$(MAKE) deploy
+	$(MAKE) activate
 
 install:
 	command -v pipenv >/dev/null 2>&1 || brew install pipenv
 	pipenv install
-	$(MAKE) activate
 
 vm-up:
 	vagrant up
