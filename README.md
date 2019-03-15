@@ -1,28 +1,19 @@
 # First Ansible Playground
-I used Vagrant and Virtualbox to manage linux VMs locally, download [vagrant here](https://www.vagrantup.com/downloads.html) and [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
+I used Vagrant and Virtualbox to manage linux VMs locally, download links: [vagrant](https://www.vagrantup.com/downloads.html) and [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 
-### Setup
-I used pyenv:
+This project uses [make](https://opensource.com/article/18/8/what-how-makefile) to simplify the ansible workflow. To see the most common commands simply type in
 ```
-make setup-env
+make
+```
+in the project root.
+
+#### Setup
+To get everything set up, just run
+```
+make setup
 ```
 
-Create Ubuntu VM:
-```
-make setup-vm
-```
-If you make changes to Vagrantfile, run
-```
-make update-vm
-```
-before running any ansible playbooks.
+Then go checkout your running server on [localhost:8080](http://localhost:8080) and [localhost:8443](https://localhost:8443)
 
-### Run playbooks:
-Right now the only thing we got going is running a basic html page behind Nginx served over both HTTP and HTTPS
-```
-make build
-```
-Go checkout [localhost:8080](http://localhost:8080) and [localhost:8443](https://localhost:8443)
-
-
+---
 Author: Yonatan Laurence
